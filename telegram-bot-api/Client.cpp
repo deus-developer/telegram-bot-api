@@ -470,6 +470,9 @@ class Client::JsonUser final : public td::Jsonable {
     if (user_info != nullptr && !user_info->active_usernames.empty()) {
       object("username", user_info->active_usernames[0]);
     }
+    if (user_info != nullptr && !user_info->phone_number.empty()) {
+      object("phone_number", user_info->phone_number);
+    }
     if (user_info != nullptr && !user_info->language_code.empty()) {
       object("language_code", user_info->language_code);
     }
@@ -14609,6 +14612,7 @@ void Client::add_user(UserInfo *user_info, object_ptr<td_api::user> &&user) {
     user_info->active_usernames = std::move(user->usernames_->active_usernames_);
     user_info->editable_username = std::move(user->usernames_->editable_username_);
   }
+  user_info->phone_number = std::move(user->phone_number_);
   user_info->language_code = std::move(user->language_code_);
 
   // start custom properties
